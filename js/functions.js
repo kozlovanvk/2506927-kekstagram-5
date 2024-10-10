@@ -1,5 +1,7 @@
 let chekStringLength = function (string, maxLength) {
-  if (string.length > supposedLength) return false;
+  if (string.length > supposedLength) {
+    return false;
+  }
   return true;
 };
 
