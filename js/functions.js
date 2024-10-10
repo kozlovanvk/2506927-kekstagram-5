@@ -11,6 +11,6 @@ let chekPalindrome = function (string) {
   let reverseString = '';
   for (let i = reference.length - 1; i >= 0; i--) {
     reverseString += reference[i];
-  }
+  };
   return reverseString === reference;
-}
+};
