@@ -98,6 +98,9 @@ const createPost = () => {
     comments: createComments(),
   }
 }
+
+let posts = [];
+
 for (let i = 0; i < 25; i++) {
-  console.log(createPost());
+  posts.push(createPost());
 };
