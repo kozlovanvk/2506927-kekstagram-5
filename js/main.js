@@ -5,7 +5,7 @@ for (let counter = 1; counter <= 25; counter++) {
 
 const urls = [];
 for (let counter = 1; counter <= 25; counter++) {
-  urls.push('photos/' + counter + '.jpg');
+  urls.push(`photos/${counter}.jpg`);
 }
 
 const descriptions = [
@@ -26,7 +26,7 @@ const getRandomInteger = (a, b) => {
   const upper = Math.floor(Math.max(a, b));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-}
+};
 
 const messages = [
   'Всё отлично!',
@@ -52,7 +52,7 @@ const names = [
 
 const createComment = (commentId) => {
   const randomCommentId = commentId;
-  const randomAvatar = 'img/avatar-' + getRandomInteger(1, 6) + '.svg';
+  const randomAvatar = `img/avatar-${getRandomInteger(1, 6)}.svg`;
   const randomMessage = messages[getRandomInteger(0, messages.length - 1)];
   const randomName = names[getRandomInteger(0, names.length - 1)];
   return {
@@ -61,21 +61,21 @@ const createComment = (commentId) => {
     message: randomMessage,
     name: randomName,
   };
-}
+};
 
 const createComments = () => {
   const commentIds = [];
   for (let counter = 0; counter < 1000; counter++) {
     commentIds.push(counter);
-  };
+  }
   const comments = [];
   for (let i = 0; i < getRandomInteger(0, 30); i++) {
-    let commentIdinArray = getRandomInteger(0, commentIds.length - 1);
+    const commentIdinArray = getRandomInteger(0, commentIds.length - 1);
     comments.push(createComment(commentIds[commentIdinArray]));
     delete commentIds[commentIdinArray];
-  };
+  }
   return comments;
-}
+};
 
 const createPost = () => {
   const randomIdIndex = getRandomInteger(0, ids.length - 1);
@@ -96,10 +96,10 @@ const createPost = () => {
     description: randomDescription,
     likes: randomLikes,
     comments: createComments(),
-  }
-}
+  };
+};
 
-let posts = [];
+const posts = [];
 for( let i = 0; i < 25; i++){
-    posts.push(createPost());
+  posts.push(createPost());
 }
