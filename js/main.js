@@ -1,14 +1,14 @@
-const ids = [];
+let ids = [];
 for (let counter = 0; counter < 25; counter++) {
   ids.push(counter);
-}
+};
 
-const urls = [];
+let urls = [];
 for (let counter = 0; counter < 25; counter++) {
   urls.push('photos/' + counter + '.jpg');
-}
+};
 
-const descriptions = [
+let descriptions = [
   'Хайповая фотография',
   'Каждый день — новое приключение',
   'Здесь и сейчас',
@@ -18,7 +18,7 @@ const descriptions = [
   'Следуй своим мечтам',
   'Неудачная фотография',
   'Уютная фотография',
-  'Эстетик'
+  'Эстетик',
 ];
 
 const getRandomInteger = (a, b) => {
@@ -26,21 +26,21 @@ const getRandomInteger = (a, b) => {
   const upper = Math.floor(Math.max(a, b));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-}
+};
 
-const createComments = () => {
+let createComments = () => {
   let commentIds = [];
   for (let counter = 0; counter < 1000; counter++) {
     commentIds.push(counter);
   };
   let comments = [];
   for (let i = 0; i < getRandomInteger(0, 30); i++) {
-    const commentIdinArray = getRandomInteger(0, commentIds.length - 1);
+    let commentIdinArray = getRandomInteger(0, commentIds.length - 1);
     comments.push(createComment(commentIds[commentIdinArray]));
     delete commentIds[commentIdinArray];
   };
   return comments;
-}
+};
 
 const createComment = (commentId) => {
   const randomCommentId = commentId;
@@ -53,9 +53,9 @@ const createComment = (commentId) => {
     message: randomMessage,
     name: randomName,
   };
-}
+};
 
-const messages = [
+let messages = [
   'Всё отлично!',
   'В целом всё неплохо.Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.В конце концов это просто непрофессионально.',
@@ -64,7 +64,7 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ?!',
 ];
 
-const names = [
+let names = [
   'Павел',
   'Мария',
   'Артем',
@@ -96,11 +96,11 @@ const createPost = () => {
     description: randomDescription,
     likes: randomLikes,
     comments: createComments(),
-  };
+  }
 }
 
 let posts = [];
 
 for (let i = 0; i < 25; i++) {
   posts.push(createPost());
-}
+};
