@@ -94,9 +94,4 @@ const createPost = () => {
   };
 };
 
-const posts = [];
-for (let i = 0; i < 25; i++) {
-  posts.push(createPost());
-}
-
-export {posts};
+export {createPost};
