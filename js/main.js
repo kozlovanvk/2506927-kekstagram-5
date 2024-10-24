@@ -1,4 +1,3 @@
 import './util.js';
-import './data.js';
+import {posts} from './data.js';
 
-console.log(posts);
