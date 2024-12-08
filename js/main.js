@@ -5,7 +5,7 @@ import {renderPictures} from './pictureRenderer/';
 const posts = [];
 for (let i = 0; i < 25; i++) {
   posts.push(createPost());
-};
+}
 
 renderPictures(posts);
 
