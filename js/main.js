@@ -1,6 +1,6 @@
 import './util.js';
 import {createPost} from './data.js';
-import {renderPictures} from './pictureRenderer/';
+import {renderPictures} from './pictureRenderer.js';
 
 const posts = [];
 for (let i = 0; i < 25; i++) {
