@@ -1,4 +1,4 @@
-var renderPictures = function(picturesData){
+const renderPictures = function(picturesData){
   const picturesContainer = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
   const template = document.getElementById('picture').content;
@@ -12,7 +12,7 @@ var renderPictures = function(picturesData){
     img.src = picture.url;
     img.alt = picture.description;
     likes.textContent = picture.likes;
-    comments.textContent = picture.comments; 
+    comments.textContent = picture.comments;
     fragment.appendChild(pictureElement);
   });
   picturesContainer.appendChild(fragment);
