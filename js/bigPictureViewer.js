@@ -41,7 +41,7 @@ const renderBigPicture = function (picture) {
     bigPicture.querySelector('.big-picture__cancel').removeEventListener('click', closeModal);
   };
 
-  const onEscKeyPress = function(evt) {
+  const onEscKeyPress = (evt) => {
     if (evt.keyCode === 27) {
       closeModal();
     }

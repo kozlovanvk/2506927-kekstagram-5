@@ -19,7 +19,7 @@ const handlePictureClick = function(evt) {
     const post = posts.find((p) => p.id === Number(postId));
     if (post) {
       renderBigPicture(post);
-    };
+    }
   }
 };
 
