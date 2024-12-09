@@ -34,22 +34,19 @@ const renderBigPicture = function (picture) {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  const closeModal = () => {
-    bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
-    document.removeEventListener('keydown', function (evt) {
-      if (evt.keyCode === 27) {
-        closeModal();
-      }
-    });
-    bigPicture.querySelector('.big-picture__cancel').removeEventListener('click', closeModal);
-  };
-
-  document.addEventListener('keydown', function (evt) {
+  const onEscKeyPress = (evt) => {
     if (evt.keyCode === 27) {
       closeModal();
     }
-  });
+  };
+
+  const closeModal = () => {
+    bigPicture.classList.add('hidden');
+    body.classList.remove('modal-open');
+    document.removeEventListener('keydown', onEscKeyPress);
+  };
+
+  document.addEventListener('keydown', onEscKeyPress);
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', closeModal);
 };
 
