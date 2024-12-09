@@ -9,6 +9,8 @@ const renderPictures = function(picturesData){
     const likes = pictureElement.querySelector('.picture__likes');
     const comments = pictureElement.querySelector('.picture__comments');
 
+    pictureElement.querySelector('.picture').setAttribute('data-id', picture.id);
+
     img.src = picture.url;
     img.alt = picture.description;
     likes.textContent = picture.likes;
