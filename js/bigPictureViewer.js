@@ -34,7 +34,7 @@ const renderBigPicture = function (picture) {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  const closeModal = function() {
+  const closeModal = () => {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     document.removeEventListener('keydown', onEscKeyPress);
