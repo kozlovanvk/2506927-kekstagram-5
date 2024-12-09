@@ -37,15 +37,17 @@ const renderBigPicture = function (picture) {
   const closeModal = function() {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
-    removeEventListeners();
+    document.removeEventListener('keydown', onEscKeyPress);
+    bigPicture.querySelector('.big-picture__cancel').removeEventListener('click', closeModal);
   };
 
-  document.addEventListener('keydown', function(evt) {
+  const onEscKeyPress = function(evt) {
     if (evt.keyCode === 27) {
-        closeModal();
+      closeModal();
     }
-  });
+  };
 
+  document.addEventListener('keydown', onEscKeyPress);
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', closeModal);
 };
 

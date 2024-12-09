@@ -16,13 +16,10 @@ const handlePictureClick = function(evt) {
   const pictureElement = evt.target.closest('.picture');
   if (pictureElement) {
     const postId = pictureElement.getAttribute('data-id');
-    const post = posts.find(p => p.id === Number(postId));
+    const post = posts.find((p) => p.id === Number(postId));
     if (post) {
       renderBigPicture(post);
-    }
-    else {
-        console.log('Пост не найден');
-    }
+    };
   }
 };
 
