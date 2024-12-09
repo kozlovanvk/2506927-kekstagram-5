@@ -47,7 +47,6 @@ const renderBigPicture = function (picture) {
       newCommentsCount.className = 'comments-count';
       commentCountContainer.appendChild(newCommentsCount);
     }
-    console.log(bigPicture.innerHTML);
   };
 
   showComments();
@@ -60,7 +59,9 @@ const renderBigPicture = function (picture) {
 
   const onEscKeyPress = (evt) => {
     if (evt.keyCode === 27) {
-      closeModal();
+      bigPicture.classList.add('hidden');
+      body.classList.remove('modal-open');
+      document.removeEventListener('keydown', onEscKeyPress);
     }
   };
 
