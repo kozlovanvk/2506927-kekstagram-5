@@ -2,6 +2,7 @@ import './util.js';
 import {createPost} from './data.js';
 import {renderPictures} from './pictureRenderer.js';
 import {renderBigPicture} from './bigPictureViewer.js';
+import {formValidation} from './formValidation.js';
 
 const posts = [];
 for (let i = 0; i < 25; i++) {
@@ -24,3 +25,5 @@ const handlePictureClick = function(evt) {
 };
 
 picturesContainer.addEventListener('click', handlePictureClick);
+
+formValidation();
