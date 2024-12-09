@@ -37,17 +37,19 @@ const renderBigPicture = function (picture) {
   const closeModal = () => {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onEscKeyPress);
+    document.removeEventListener('keydown', function (evt) {
+      if (evt.keyCode === 27) {
+        closeModal();
+      }
+    });
     bigPicture.querySelector('.big-picture__cancel').removeEventListener('click', closeModal);
   };
 
-  const onEscKeyPress = (evt) => {
+  document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27) {
       closeModal();
     }
-  };
-
-  document.addEventListener('keydown', onEscKeyPress);
+  });
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', closeModal);
 };
 
