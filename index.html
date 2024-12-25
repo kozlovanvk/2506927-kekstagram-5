@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="vendor/nouislider/nouislider.css">
+  <script src="/vendor/nouislider/nouislider.js"></script>
   <script src="/vendor/pristine/pristine.min.js"></script>
   <script src="/js/main.js" type="module"></script>
   <title>Кекстаграм</title>
@@ -119,6 +121,7 @@
                 <fieldset class="img-upload__text text">
                   <div class="img-upload__field-wrapper">
                     <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
+                    <div class="text__hashtags__error-text"></div>
                   </div>
                   <div class="img-upload__field-wrapper">
                     <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength='140'></textarea>
