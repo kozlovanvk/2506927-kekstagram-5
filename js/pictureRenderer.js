@@ -3,6 +3,13 @@ const renderPictures = function(picturesData){
   const fragment = document.createDocumentFragment();
   const template = document.getElementById('picture').content;
 
+  const picturesCollection = document.querySelectorAll('.picture');
+  if (picturesCollection !== undefined) {
+    picturesCollection.forEach((picture) => {
+      picture.remove();
+    });
+  }
+
   picturesData.forEach((picture) => {
     const pictureElement = template.cloneNode(true);
     const img = pictureElement.querySelector('.picture__img');
