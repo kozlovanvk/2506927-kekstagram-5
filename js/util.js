@@ -5,4 +5,12 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-export {getRandomInteger};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, debounce};

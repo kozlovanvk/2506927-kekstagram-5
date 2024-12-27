@@ -31,7 +31,7 @@ const validateForm = function() {
       createErrorMessage('Можно использовать не более 5 хэш-тегов');
       return false;
     };
-    if (!hashtags.every(tag => /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/.test(tag))){
+    if (!hashtags.every(tag => /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/.test(tag) && tag.length > 1)){
       createErrorMessage('Хэш-тег может состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи, а длина должна быть от 2 до 20 символов, включая решетку');
       return false;
     };
@@ -68,6 +68,7 @@ const validateForm = function() {
   const scaleHiddenInput = formElement.querySelector('input[name="scale"]');
 
   const effectLevelSlider = document.querySelector('.effect-level__slider');
+  const effectValue = document.querySelector('.effect-level__value');
 
   noUiSlider.create(effectLevelSlider, {
     start: [100],
@@ -82,53 +83,129 @@ const validateForm = function() {
 
   const resetEffectLevel = () => {
     effectLevelSlider.noUiSlider.set([100]);
-    document.querySelector('.effect-level__value').value = 100;
+    effectValue.value = 100;
     imagePreview.style.filter = '';
   };
 
-  const updateImageEffect = (effect, value) => {
-    switch (effect) {
-      case 'chrome':
-        imagePreview.style.filter = `grayscale(${value / 100})`;
-        break;
-      case 'sepia':
-        imagePreview.style.filter = `sepia(${value / 100})`;
-        break;
-      case 'marvin':
-        imagePreview.style.filter = `invert(${value}%)`;
-        break;
-      case 'phobos':
-        imagePreview.style.filter = `blur(${(value / 100) * 3}px)`;
-        break;
-      case 'heat':
-        imagePreview.style.filter = `brightness(${1 + (value / 100 * 2)})`;
-        break;
-      default:
-        imagePreview.style.filter = '';
-    }
-  };
+  function filterNone() {
+    effectLevelSlider.classList.add('hidden');
+    imagePreview.style.filter = '';
+    imagePreview.classList.remove(imagePreview.classList[0]);
+    imagePreview.classList.add('effects__preview--none');
+  }
+
+  function filterChrome() {
+    effectLevelSlider.classList.remove('hidden');
+    effectLevelSlider.noUiSlider.updateOptions ({
+      range: {
+        min: 0,
+        max: 1,
+      },
+      step: 0.1,
+      start: 1,
+    });
+    imagePreview.classList.remove(imagePreview.classList[0]);
+    imagePreview.classList.add('effects__preview--chrome');
+    effectLevelSlider.noUiSlider.on('update', () => {
+      imagePreview.style.filter = `grayscale(${effectLevelSlider.noUiSlider.get()})`;
+      effectValue.value = effectLevelSlider.noUiSlider.get();
+    });
+  }
+
+  function filterSepia() {
+    effectLevelSlider.classList.remove('hidden');
+    effectLevelSlider.noUiSlider.updateOptions ({
+      range: {
+        min: 0,
+        max: 1,
+      },
+      step: 0.1,
+      start: 1,
+    });
+    imagePreview.classList.remove(imagePreview.classList[0]);
+    imagePreview.classList.add('effects__preview--sepia');
+    effectLevelSlider.noUiSlider.on('update', () => {
+      imagePreview.style.filter = `sepia(${effectLevelSlider.noUiSlider.get()})`;
+      effectValue.value = effectLevelSlider.noUiSlider.get();
+    });
+  }
+
+  function filterMarvin() {
+    effectLevelSlider.classList.remove('hidden');
+    effectLevelSlider.noUiSlider.updateOptions ({
+      range: {
+        min: 0,
+        max: 100,
+      },
+      step: 1,
+      start: 100,
+    });
+    imagePreview.classList.remove(imagePreview.classList[0]);
+    imagePreview.classList.add('effects__preview--marvin');
+    effectLevelSlider.noUiSlider.on('update', () => {
+      imagePreview.style.filter = `invert(${effectLevelSlider.noUiSlider.get()}%)`;
+      effectValue.value = effectLevelSlider.noUiSlider.get();
+    });
+  }
+
+  function filterPhobos() {
+    effectLevelSlider.classList.remove('hidden');
+    effectLevelSlider.noUiSlider.updateOptions ({
+      range: {
+        min: 0,
+        max: 3,
+      },
+      step: 0.1,
+      start: 3,
+    });
+    imagePreview.classList.remove(imagePreview.classList[0]);
+    imagePreview.classList.add('effects__preview--phobos');
+    effectLevelSlider.noUiSlider.on('update', () => {
+      imagePreview.style.filter = `blur(${effectLevelSlider.noUiSlider.get()}px)`;
+      effectValue.value = effectLevelSlider.noUiSlider.get();
+    });
+  }
+
+  function filterHeat() {
+    effectLevelSlider.classList.remove('hidden');
+    effectLevelSlider.noUiSlider.updateOptions ({
+      range: {
+        min: 1,
+        max: 3,
+      },
+      step: 0.1,
+      start: 3,
+    });
+    imagePreview.classList.remove(imagePreview.classList[0]);
+    imagePreview.classList.add('effects__preview--heat');
+    effectLevelSlider.noUiSlider.on('update', () => {
+      imagePreview.style.filter = `brightness(${effectLevelSlider.noUiSlider.get()})`;
+      effectValue.value = effectLevelSlider.noUiSlider.get();
+    });
+  }
 
   const effectRadios = document.querySelectorAll('.effects__radio');
   effectRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      const effect = radio.value;
-      resetEffectLevel();
-      if (effect === 'none') {
-        imagePreview.style.filter = '';
-        effectLevelSlider.classList.add('hidden');
-      } else {
-        effectLevelSlider.classList.remove('hidden');
-        updateImageEffect(effect, 100);
-        document.querySelector('.effect-level__value').value = 100;
+    radio.addEventListener('change', (evt) => {
+      if (evt.target.value === 'none') {
+        filterNone();
+      } else if (evt.target.value === 'chrome') {
+        filterChrome();
+      } else if (evt.target.value === 'sepia') {
+        filterSepia();
+      } else if (evt.target.value === 'marvin') {
+        filterMarvin();
+      } else if (evt.target.value === 'phobos') {
+        filterPhobos();
+      } else if (evt.target.value === 'heat') {
+        filterHeat();
       }
     });
   });
 
   effectLevelSlider.noUiSlider.on('update', (values) => {
     const value = values[0];
-    document.querySelector('.effect-level__value').value = value;
-    const selectedEffect = document.querySelector('.effects__radio:checked').value;
-    updateImageEffect(selectedEffect, value);
+    effectValue.value = value;
   });
 
   const SCALE_VALUE_STEP = 25;
@@ -157,11 +234,25 @@ const validateForm = function() {
   uploadFileInput.addEventListener('change', () => {
     imgUploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
+
     const file = uploadFileInput.files[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onload = function(e) {
         imagePreview.src = e.target.result;
+        resetEffectLevel();
+
+        const previews = document.querySelectorAll('.effects__preview');
+        previews.forEach(preview => {
+          preview.style.backgroundImage = `url('${e.target.result}')`;
+        });
+
+        if (document.querySelector('.effects__radio:checked').value === 'none') {
+          effectLevelSlider.classList.add('hidden');
+        } else {
+          effectLevelSlider.classList.remove('hidden');
+      }
       };
       reader.readAsDataURL(file);
     }
@@ -177,14 +268,24 @@ const validateForm = function() {
     resetEffectLevel();
     currentScale = 100;
     updateScaleValue();
+    const effectRadios = document.querySelectorAll('.effects__radio');
+    effectRadios.forEach(radio => {
+        radio.checked = radio.value === 'none';
+    });
+    imagePreview.className = '';
+    imagePreview.style.filter = '';
+    imagePreview.classList.add('effects__preview--none');
+    deleteErrorMessage();
   };
+
+  let isMessageOpen = false;
 
   const cancelButton = document.querySelector('#upload-cancel');
   cancelButton.addEventListener('click', closeForm);
   document.addEventListener('keydown', function(evt) {
     if (evt.key === 'Escape' && document.activeElement !== uploadFileInput &&
       document.activeElement !== document.querySelector('.text__hashtags') &&
-      document.activeElement !== document.querySelector('.text__description')) {
+      document.activeElement !== document.querySelector('.text__description') && !isMessageOpen) {
       closeForm();
     }
   });
@@ -216,17 +317,19 @@ const validateForm = function() {
         submitButton.disabled = false;
       });
     } else {
-      alert('Ошибка заполнения формы')
+      showMessage('#error', 'error', '.error');
     }
   });
 
   const showMessage = (templateId, type, contentType) => {
+    isMessageOpen = true;
     const messageTemplate = document.querySelector(templateId).content.querySelector(contentType);
     const messageElement = messageTemplate.cloneNode(true);
 
     document.body.appendChild(messageElement);
 
     const closeMessage = () => {
+      isMessageOpen = false;
       messageElement.remove();
       document.removeEventListener('keydown', onEscPress);
       messageElement.removeEventListener('click', closeMessage);
