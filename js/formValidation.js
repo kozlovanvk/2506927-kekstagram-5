@@ -13,7 +13,8 @@ const validateForm = function() {
     if (message !== null) {
       const errorMessage = document.querySelector('.text__hashtags__error-text');
       errorMessage.textContent = message;
-    }};
+    }
+  };
 
   const deleteErrorMessage = () => {
     document.querySelector('.text__hashtags__error-text').textContent = '';
@@ -24,21 +25,21 @@ const validateForm = function() {
       deleteErrorMessage();
       return true;
     }
-    const hashtags = textHashtags.split(/\s+/).map(tag => tag.trim()).filter(tag => tag !== '');
-    const lowerCaseHashtags = hashtags.map(tag => tag.toLowerCase());
+    const hashtags = textHashtags.split(/\s+/).map((tag) => tag.trim()).filter((tag) => tag !== '');
+    const lowerCaseHashtags = hashtags.map((tag) => tag.toLowerCase());
     const uniqueHashtags = new Set(lowerCaseHashtags);
     if (hashtags.length > 5){
       createErrorMessage('Можно использовать не более 5 хэш-тегов');
       return false;
-    };
-    if (!hashtags.every(tag => /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/.test(tag) && tag.length > 1)){
+    }
+    if (!hashtags.every((tag) => /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/.test(tag) && tag.length > 1)){
       createErrorMessage('Хэш-тег может состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи, а длина должна быть от 2 до 20 символов, включая решетку');
       return false;
-    };
+    }
     if (hashtags.length !== uniqueHashtags.size){
       createErrorMessage('Нельзя использовать повторяющиеся хэш-теги');
       return false;
-    };
+    }
     deleteErrorMessage();
     return true;
   };
@@ -185,7 +186,7 @@ const validateForm = function() {
   }
 
   const effectRadios = document.querySelectorAll('.effects__radio');
-  effectRadios.forEach(radio => {
+  effectRadios.forEach((radio) => {
     radio.addEventListener('change', (evt) => {
       if (evt.target.value === 'none') {
         filterNone();
@@ -244,7 +245,7 @@ const validateForm = function() {
         resetEffectLevel();
 
         const previews = document.querySelectorAll('.effects__preview');
-        previews.forEach(preview => {
+        previews.forEach((preview) => {
           preview.style.backgroundImage = `url('${e.target.result}')`;
         });
 
@@ -252,7 +253,7 @@ const validateForm = function() {
           effectLevelSlider.classList.add('hidden');
         } else {
           effectLevelSlider.classList.remove('hidden');
-      }
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -268,7 +269,6 @@ const validateForm = function() {
     resetEffectLevel();
     currentScale = 100;
     updateScaleValue();
-    const effectRadios = document.querySelectorAll('.effects__radio');
     effectRadios.forEach(radio => {
         radio.checked = radio.value === 'none';
     });
@@ -302,20 +302,20 @@ const validateForm = function() {
         method: 'POST',
         body: formData,
       })
-      .then(response => {
-        if (response.ok) {
-          closeForm();
-          showMessage('#success', 'success', '.success');
-        } else {
-          throw new Error('Ошибка отправки данных');
-        }
-      })
-      .catch(() => {
-        showMessage('#error', 'error', '.error');
-      })
-      .finally(() => {
-        submitButton.disabled = false;
-      });
+        .then(response => {
+          if (response.ok) {
+            closeForm();
+            showMessage('#success', 'success', '.success');
+          } else {
+            throw new Error('Ошибка отправки данных');
+          }
+        })
+        .catch(() => {
+          showMessage('#error', 'error', '.error');
+        })
+        .finally(() => {
+          submitButton.disabled = false;
+        });
     } else {
       showMessage('#error', 'error', '.error');
     }

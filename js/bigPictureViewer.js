@@ -20,14 +20,11 @@ const renderBigPicture = function (picture) {
   commentsCount.textContent = `${picture.comments.length}`;
 
   commentsList.innerHTML = '';
-  console.log(commentsList);
   const commentsPerPage = 5;
   let currentCommentIndex = 0;
 
   const showComments = () => {
-    console.log(picture.comments);
     let commentsToShow = picture.comments.slice(currentCommentIndex, currentCommentIndex + commentsPerPage);
-    console.log(commentsToShow);
     commentsToShow.forEach((comment) => {
       const commentElement = document.createElement('li');
       commentElement.className = 'social__comment';
@@ -38,9 +35,6 @@ const renderBigPicture = function (picture) {
         <p class="social__text">${comment.message}</p>`;
       commentsList.appendChild(commentElement);
     });
-    console.log(commentsList);
-    console.log(currentCommentIndex);
-    console.log(commentsToShow);
     currentCommentIndex += commentsToShow.length;
     commentCountContainer.textContent = `${currentCommentIndex} из ${commentsCount.textContent} комментариев`;
 
@@ -74,7 +68,6 @@ const renderBigPicture = function (picture) {
     body.classList.remove('modal-open');
     document.removeEventListener('keydown', onEscKeyPress);
     commentsList.innerHTML = '';
-    console.log(commentsList);
   };
 
   document.addEventListener('keydown', onEscKeyPress);
