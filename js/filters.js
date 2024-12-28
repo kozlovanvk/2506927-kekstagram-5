@@ -13,17 +13,15 @@ const fetchPosts = async () => {
     posts = await getPosts();
     renderPictures(posts);
   } catch (error) {
-    console.error('Ошибка при загрузке постов:', error);
-    alert('Не удалось загрузить фотографии. Попробуйте позже.');
+    throw new Error('Ошибка загрузки данных');
   }
 };
 
 fetchPosts();
-const cont = document.querySelector('.img-filters');
-cont.classList.remove('img-filters--inactive');
+document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 const postsContainer = document.querySelector('.pictures');
 
-const handlePictureClick = (evt) => {
+const onPictureClcik = (evt) => {
   const pictureElement = evt.target.closest('.picture');
   if (pictureElement) {
     const postId = pictureElement.getAttribute('data-id');
@@ -34,7 +32,7 @@ const handlePictureClick = (evt) => {
   }
 };
 
-postsContainer.addEventListener('click', handlePictureClick);
+postsContainer.addEventListener('click', onPictureClcik);
 
 const renderDefault = debounce((photoData) => {
   renderPictures(photoData);
@@ -79,9 +77,7 @@ const applyDiscussedFilter = (photoData) => {
   discussedFilter.classList.add('img-filters__button--active');
   const discussedPhotos = photoData.slice();
 
-  discussedPhotos.sort((firstPhoto, secondPhoto) => {
-    return secondPhoto.comments.length - firstPhoto.comments.length;
-  });
+  discussedPhotos.sort((firstPhoto, secondPhoto) => secondPhoto.comments.length - firstPhoto.comments.length);
 
   renderDisscussed(discussedPhotos);
 };
