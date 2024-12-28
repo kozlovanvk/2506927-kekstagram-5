@@ -1,4 +1,4 @@
-const renderPictures = function(picturesData){
+const renderPictures = (picturesData) => {
   const picturesContainer = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
   const template = document.getElementById('picture').content;

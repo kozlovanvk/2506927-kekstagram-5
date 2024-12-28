@@ -1,4 +1,4 @@
-const renderBigPicture = function (picture) {
+const renderBigPicture = (picture) => {
   const bigPicture = document.querySelector('.big-picture');
   const body = document.body;
 
@@ -24,15 +24,24 @@ const renderBigPicture = function (picture) {
   let currentCommentIndex = 0;
 
   const showComments = () => {
-    let commentsToShow = picture.comments.slice(currentCommentIndex, currentCommentIndex + commentsPerPage);
+    const commentsToShow = picture.comments.slice(currentCommentIndex, currentCommentIndex + commentsPerPage);
     commentsToShow.forEach((comment) => {
       const commentElement = document.createElement('li');
       commentElement.className = 'social__comment';
-      commentElement.innerHTML = `<img class="social__picture"
-        src="${comment.avatar}"
-        alt="${comment.name}"
-        width="35" height="35">
-        <p class="social__text">${comment.message}</p>`;
+
+      const commentImage = document.createElement('img');
+      commentImage.className = 'social__picture';
+      commentImage.src = comment.avatar;
+      commentImage.alt = comment.name;
+      commentImage.width = 35;
+      commentImage.height = 35;
+
+      const commentText = document.createElement('p');
+      commentText.className = 'social__text';
+      commentText.textContent = comment.message;
+
+      commentElement.appendChild(commentImage);
+      commentElement.appendChild(commentText);
       commentsList.appendChild(commentElement);
     });
     currentCommentIndex += commentsToShow.length;
@@ -58,6 +67,7 @@ const renderBigPicture = function (picture) {
 
   const onEscKeyPress = (evt) => {
     if (evt.keyCode === 27) {
+      // eslint-disable-next-line no-use-before-define
       closeModal();
     }
   };
